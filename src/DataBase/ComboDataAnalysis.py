@@ -314,7 +314,20 @@ class ExploreDataAnalysis(object):
         draw_bar(self.df_feature.columns,values)
         
         return
+    
+    def draw_Hist_KDE(self):
+        name = self.df_feature.columns
+        k= 0
+        fig1, ax1 = plt.subplots(nrows=6, ncols=4)
+        for i in range(6):               
+            for j in range(4):           
+                ax1[i, j].hist(self.df_feature[name[k]],density=True)
 
+                ax1[i, j].set_ylabel(name[k])
+                k = k + 1
+                            
+        plt.show() 
+    
 def draw_bar(key_name,key_values):
     plt.rcParams['font.sans-serif']=['SimHei'] #显示中文标签
     plt.rcParams['axes.unicode_minus']=False
@@ -423,13 +436,16 @@ def ExploreDataAnalysis_combo_data(dbname = 'Analysis_data'):
     cols_name = EDA.get_Feature_Columns()
 
     #EDA.important_feature(cols_name)
+    EDA.draw_Hist_KDE()
     EDA.cluster_analysis()
     
     return
+
     
 if __name__ == '__main__':
     # 1 生成数据并分析
-    generate_combo_data(times = 1)
+    #generate_combo_data(times = 0)
     # 2 分析数据
+    ExploreDataAnalysis_combo_data('Analysis_data1')
     
     pass
